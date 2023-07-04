@@ -5,6 +5,13 @@
 </head>
 <body>
 	<h1>Article Lists</h1>
+	<div class="articles">
+		{%for article in articles%}
+		<a href=""><h1>{{article.title}}</h1></a>
+		<p>{{article.snippet}}</p>
+		<p>{{article.date}}</p>
+		{%endfor%}
+	</div>
 
 </body>
 </html>
