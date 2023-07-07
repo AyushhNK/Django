@@ -1,12 +1,13 @@
-{%extends 'base_template.html'%}
+{% extends 'base_template.html' %}
 
-{%block content%}
+{% block content %}
 <div class="article-detail">
-	<div class="article">
-		<img src="{{articles.thumb.url}}"/>
-		<h1>{{articles.title}}</h1>
-		<p>{{articles.body}}</p>
-		<p>{{articles.date}}</p>
-	</div>
+    <div class="article">
+        <img src="{{ articles.thumb.url }}" />
+        <h2>{{ articles.title }}</h2>
+        <h3>Written by {{ articles.author.username }}</h3>
+        <p>{{ articles.body }}</p>
+        <p>{{ articles.date }}</p>
+    </div>
 </div>
-{%endblock%}
+{% endblock %}

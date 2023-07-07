@@ -2,7 +2,7 @@
 
 {%block content%}
 <div class="create-article">
-	<h1>create an awesome new article</h1>
+	<h2>create an awesome new article</h2>
 	<form class="site-form" action="{%url 'articles:create'%}" method="post" enctype="mutipart/form">
 		{%csrf_token%}
 		{{form}}
