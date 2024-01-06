@@ -4,7 +4,11 @@
 	<title>weather</title>
 </head>
 <body>
-	<h1>{{city}}</h1>
-	<img src="{{icon}}">
+	<h1>hello world</h1>
+	<form action="/weather_detail/" method="POST">
+		{% csrf_token %}
+	    {{ form }}
+	    <input type="submit" value="Submit">
+	</form>
 </body>
 </html>
