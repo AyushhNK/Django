@@ -26,9 +26,9 @@ def weather_detail(request):
 	icon=data["current"]["weather_icons"][0]
 
 
-	return JsonResponse(data)
-	# return render(request,"weather_detail.html",{"icon":icon,
-	# 	"city":data["location"]["name"]})
+	# return JsonResponse(data)
+	return render(request,"weather_detail.html",{"icon":icon,
+		"city":data["location"]["name"]})
 
 
 
