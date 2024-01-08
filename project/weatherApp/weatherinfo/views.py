@@ -24,11 +24,22 @@ def weather_detail(request):
 	data=Response.json()
 	
 	icon=data["current"]["weather_icons"][0]
+	city=data["location"]["name"]
+	time=data["location"]["localtime"]
+	country=data["location"]["country"]
+	temperature=data["current"]["temperature"]
+	weather_desc=data["current"]["weather_descriptions"][0]
+	precip=data["current"]["precip"]
 
 
 	# return JsonResponse(data)
 	return render(request,"weather_detail.html",{"icon":icon,
-		"city":data["location"]["name"]})
+		"city":city,
+		"time":time,
+		"country":country,
+		"temperature":temperature,
+		"weather_desc":weather_desc,
+		"precip":precip})
 
 
 
