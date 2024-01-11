@@ -1,0 +1,23 @@
+
+
+{% extends 'base_layout.html' %}
+
+{% block content %}
+	<div class="flex">
+		{% for item in items %}
+		<div class="m-5">
+		 <img src="{{ item.product.image.url }}" alt="Your Image" class="hover:h-60 hover:w-60 h-40 w-40">
+		 <p>{{ item.product.id }}</p>
+		<p>{{ item.product.name }}</p>
+		<p>{{ item.product.price }}</p>
+		<p>Quantity:{{item.quantity}}</p>
+		<form method="POST" action="{% url 'remove_cart' item.id %}">
+            {% csrf_token %}
+            <input type="submit" value="Remove from Cart">
+        </form>
+		</div>
+		{% endfor %}
+
+	</div>
+	<h1>your total price is :{{totaldue}}</h1>
+{% endblock %}
