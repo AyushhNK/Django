@@ -2,29 +2,21 @@
 
 {% block content %}
 
-	<h1>home</h1>
-	<div>hello</div>
-	{% if name.is_authenticated %}
-	<a href="{% url 'items_cart' %}">Your cart</a>
-	<a href="{% url 'log_out' %}">logout</a>
-	<h2>hello {{name}}</h2>
-	{% else %}
-	<a href="{% url 'log_in' %}">login</a>
-	<a href="{% url 'signup' %}">signup</a>
-
-	<h2>welcome to the site</h2>
-	{% endif %}
-	<div class="flex">
-		{% for o in objects %}
-		<div class="m-5">
-		 <img src="{{ o.image.url }}" alt="Your Image" class="hover:h-60 hover:w-60 h-40 w-40">
-		<p>{{ o.name }}</p>
-		<p>{{ o.price }}</p>
-		<form method="POST" action="{% url 'add_to_cart' o.id %}">
-            {% csrf_token %}
-            <input type="submit" value="Add to Cart">
-        </form>
-		</div>
+	<div class="container flex flex-row flex-wrap mt-8 ml-52">
+	    
+	    {% for o in objects %}
+	    <div class="p-4 rounded-md shadow-md m-4  bg-blue-400 text-center">
+			<img src="{{ o.image.url }}" alt="Your Image" class="h-40 w-40">
+			<p>{{ o.name }}</p>
+			<p>${{ o.price }}</p>
+			{% if name.is_authenticated %}
+			<form method="POST" action="{% url 'add_to_cart' o.id %}">
+	            {% csrf_token %}
+	            <input type="submit" value="Add to Cart" class="hover:font-bold">
+	        </form>
+	        {% endif %}
+	    </div>
 		{% endfor %}
+	    
 	</div>
 {% endblock %}
