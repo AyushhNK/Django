@@ -1,8 +1,18 @@
 
-  <h2>Login</h2>
+<!--   <h2>Logins</h2>
   <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Login</button>
-  </form>
+  </form> -->
 
+  <h2>Login</h2>
+  {% for account in socialaccount.providers %}
+    <a href="{% provider_login_url account.id %}">Login with {{ account.name }}</a><br>
+  {% endfor %}
+  <form method="post" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+  </form>
+  <p>Don't have an account? <a href="{% url 'account_signup' %}">Sign up</a></p>
