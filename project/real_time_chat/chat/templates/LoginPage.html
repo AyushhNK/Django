@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>chat app</title>
-	<script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
+{% extends 'baselayout.html' %}
+
+{% block content %}
+
 	<form method ="post">
 		{% csrf_token %}
 		{{form.as_p}}
 		<br>
 		<button type = "submit">Login</button>
 	</form>
-</body>
-</html>
+{% endblock %}
+

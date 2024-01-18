@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chatapp</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+		<nav class="flex justify-end">
+            {% if request.user.is_authenticated %}
+            <a href = "{% url 'logout-user' %}">Logout</a>
+            {% endif %}
+        </nav>
+
+	{% block content %}{% endblock %}
+</body>
+</html>
