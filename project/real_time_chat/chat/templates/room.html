@@ -3,7 +3,11 @@
 {% block content %}
         <div class="flex h-screen">
             <div class="flex-initial w-64 bg-blue-200">
-                <h1>hello </h1>
+                <h1>
+                    {% for u in users %}
+                    <a href="/send_message/{{u}}">{{u}}</a>
+                    {% endfor %}
+                </h1>
             </div>
             <div class="flex-1 bg-green-200">
                 <h1>Hello , Welcome to my chat site ! {{request.user}}</h1>
@@ -22,6 +26,8 @@
 
 
     <script>
+
+        // WebSocket configuration
         const chatSocket = new WebSocket("ws://" + window.location.host + "/");
         chatSocket.onopen = function (e) {
             console.log("The connection was setup successfully !");
@@ -29,18 +35,22 @@
         chatSocket.onclose = function (e) {
             console.log("Something unexpected happened !");
         };
-        document.querySelector("#id_message_send_input").focus();
+        
+        // for the up key button to send the message
         document.querySelector("#id_message_send_input").onkeyup = function (e) {
             if (e.keyCode == 13) {
             document.querySelector("#id_message_send_button").click();
             }
         };
+
         document.querySelector("#id_message_send_button").onclick = function (e) {
             var messageInput = document.querySelector(
             "#id_message_send_input"
             ).value;
             chatSocket.send(JSON.stringify({ message: messageInput, username : "{{request.user.username}}"}));
         };
+
+
         chatSocket.onmessage = function (e) {
             const data = JSON.parse(e.data);
             var div = document.createElement("div");

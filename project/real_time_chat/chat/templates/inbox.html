@@ -1,0 +1,16 @@
+{% extends 'baselayout.html' %}
+{% block content %}
+	<!-- inbox.html -->
+<h1>Inbox</h1>
+{% for message in received_messages %}
+  <p>{{ message.sender }} at {{ message.timestamp }}: {{ message.content }}</p>
+{% endfor %}
+
+<h1>Send Message to {{ recipient.username }}</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Send</button>
+</form>
+{% endblock %}
+
