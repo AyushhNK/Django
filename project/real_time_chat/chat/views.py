@@ -1,14 +1,13 @@
 # views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib import messages
 from django.db.models import Q
 from .models import Message
 from .forms import MessageForm
 
-def inbox(request):
-    received_messages = Message.objects.filter(receiver=request.user).order_by('-timestamp')
-    return render(request, 'inbox.html', {'received_messages': received_messages})
+# def inbox(request):
+#     received_messages = Message.objects.filter(receiver=request.user).order_by('-timestamp')
+#     return render(request, 'inbox.html', {'received_messages': received_messages})
 
 def send_message(request, recipient_username):
     recipient = User.objects.get(username=recipient_username)
@@ -23,7 +22,6 @@ def send_message(request, recipient_username):
             message.sender = request.user
             message.receiver = recipient
             message.save()
-            messages.success(request, 'Message sent successfully!')
             return redirect(f'/send_message/{recipient_username}')
     else:
         form = MessageForm()
