@@ -1,7 +1,12 @@
 from rest_framework import serializers
-from .models import Student
+from .models import Author,Book
 
-class StudentSerializer(serializers.HyperlinkedModelSerializer):
+class AuthorSerializer(serializers.ModelSerializer):
 	class Meta:
-		model=Student
-		fields=['name','age']
+		model=Author
+		fields=['first_name','last_name','bio']
+
+class BookSerializer(serializers.ModelSerializer):
+	class Meta:
+		model=Book
+		fields=['title','author','publication_date']

@@ -1,10 +1,10 @@
 from django.urls import path,include
 from . import views
-from .views import UserViewset
+from .views import BookViewset
 from rest_framework.routers import DefaultRouter
 
 router=DefaultRouter()
-router.register('users',views.UserViewset,basename='Userst')
+router.register('book',views.BookViewset,basename='book')
 
 urlpatterns=[
 	path("home/",views.home,name="home"),
