@@ -31,17 +31,25 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'rest_framework',
-    'rest_framework.authtoken',
-    'api',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'api',
     
 ]
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.BasicAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework.authentication.TokenAuthentication',  
+#     ],
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -127,12 +135,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ),
-    'PAGE_SIZE': 10
-}
+
+
 
 

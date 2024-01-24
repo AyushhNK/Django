@@ -1,0 +1,41 @@
+== Info:   Trying ::1:8000...
+== Info:   Trying 127.0.0.1:8000...
+== Info: Connected to localhost (127.0.0.1) port 8000 (#0)
+=> Send header, 146 bytes (0x92)
+0000: GET /book/ HTTP/1.1
+0015: Host: localhost:8000
+002b: User-Agent: curl/7.77.0
+0044: Accept: */*
+0051: Authorization: Token b0ce81a27f5583d6021ac1b5219460b3e5a6a106
+0090: 
+== Info: Mark bundle as not supporting multiuse
+<= Recv header, 17 bytes (0x11)
+0000: HTTP/1.1 200 OK
+<= Recv header, 37 bytes (0x25)
+0000: Date: Tue, 23 Jan 2024 12:41:14 GMT
+<= Recv header, 39 bytes (0x27)
+0000: Server: WSGIServer/0.2 CPython/3.10.5
+<= Recv header, 32 bytes (0x20)
+0000: Content-Type: application/json
+<= Recv header, 14 bytes (0xe)
+0000: Vary: Accept
+<= Recv header, 33 bytes (0x21)
+0000: Allow: GET, POST, HEAD, OPTIONS
+<= Recv header, 23 bytes (0x17)
+0000: X-Frame-Options: DENY
+<= Recv header, 21 bytes (0x15)
+0000: Content-Length: 211
+<= Recv header, 33 bytes (0x21)
+0000: X-Content-Type-Options: nosniff
+<= Recv header, 30 bytes (0x1e)
+0000: Referrer-Policy: same-origin
+<= Recv header, 41 bytes (0x29)
+0000: Cross-Origin-Opener-Policy: same-origin
+<= Recv header, 2 bytes (0x2)
+0000: 
+<= Recv data, 211 bytes (0xd3)
+0000: [{"id":1,"title":"mistborn","author":1,"publication_date":"2024-
+0040: 01-02"},{"id":2,"title":"django","author":2,"publication_date":"
+0080: 2024-01-16"},{"id":3,"title":"fastapi","author":1,"publication_d
+00c0: ate":"2024-01-09"}]
+== Info: Connection #0 to host localhost left intact

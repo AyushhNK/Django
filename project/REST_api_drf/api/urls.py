@@ -9,7 +9,8 @@ router.register('author',views.AuthorViewset,basename='author')
 
 urlpatterns=[
 	path("home/",views.home,name="home"),
-	path('',include(router.urls))
+	# path('view/',views.YourApiView.as_view(),name="view"),
+	path('api/',include(router.urls))
 ]
 
 
