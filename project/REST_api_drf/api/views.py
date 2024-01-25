@@ -11,6 +11,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.response import Response
+from drf_yasg.utils import swagger_auto_schema
 
 
 # Create your views here.
@@ -44,7 +45,10 @@ class SignupView(APIView):
 		serializer=UserSerializer(user)
 		return Response(serializer.data,status=status.HTTP_201_CREATED)
 
-
+@swagger_auto_schema(
+    operation_description="login to your account.",
+    responses={200: 'OK'},
+)
 class LoginView(APIView):
 	def post(self,request):
 		username=request.data.get("username")
