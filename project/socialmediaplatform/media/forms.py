@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
-from .models import UserProfile
+from .models import UserProfile,Post
 from django.contrib.auth.models import User
 
 class UserProfileForm(UserCreationForm):
@@ -22,3 +22,6 @@ class UserProfileForm(UserCreationForm):
         UserProfile.objects.create(user=user, bio=bio, profile_picture=profile_picture)
 
         return user
+
+class CreatePostForm(forms.Form):
+	content=forms.CharField(max_length=500, required=True)
