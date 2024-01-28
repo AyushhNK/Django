@@ -23,5 +23,7 @@ class UserProfileForm(UserCreationForm):
 
         return user
 
-class CreatePostForm(forms.Form):
-	content=forms.CharField(max_length=500, required=True)
+class CreatePostForm(forms.ModelForm):
+	class Meta:
+		model=Post
+		fields=["content"]

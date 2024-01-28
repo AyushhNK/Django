@@ -1,12 +1,25 @@
 {% extends 'baselayout.html' %}
 {%block content %}
+{% for u in user %}
+<p>{{u.username}}</p>
+<a href="{% url 'sendrequest' u.id %}">send request</a>
+{% endfor %}
 
 {% if request.user.is_authenticated %}
 <h1>Hello {{request.user}}</h1>
+<a href="{% url 'friendrequest'%}">friend requests</a>
+<a href="{% url 'createpost' %}">Createpost</a>
+
 <a href="{% url 'logout' %}">logout</a>
 {% for post in posts %}
 	<div>
-		<p>{{post.user}}</p>
+		<p>{{post.user}}-{{post.created_at}}</p>
+		{% if request.user == post.user %}
+		<form method="POST" action="{% url 'deletepost' post.id %}">
+	            {% csrf_token %}
+	            <input type="submit" value="Delete" class="hover:font-bold">
+	    </form>
+	    {% endif %}
 		<p>{{post.content}}</p>
 		<form method="POST" action="{% url 'like' post.id %}">
 	            {% csrf_token %}
@@ -15,6 +28,9 @@
 	    <p>Likes:{{post.like_set.count}}</p>
 	</div>
 {% endfor %}
+
+
+
 {% else %}
 	<h1>Welcome to Socivibe</h1>
 	<a href="{% url 'login' %}">Login</a>

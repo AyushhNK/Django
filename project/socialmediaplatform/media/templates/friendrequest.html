@@ -1,0 +1,18 @@
+{% block content %}
+  <h2>Friend Requests</h2>
+
+  <h3>Received Requests:</h3>
+  <ul>
+    {% for request in requests %}
+      {% if request.accepted == False %}
+      <li>
+        {{ request.from_user.username }} 
+        <form method="post" action="{% url 'acceptrequest' request.id %}">
+          {% csrf_token %}
+          <button type="submit">Accept</button>
+        </form>
+      </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% endblock %}

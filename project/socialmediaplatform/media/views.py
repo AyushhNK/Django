@@ -2,12 +2,14 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
 from .forms import UserProfileForm,CreatePostForm
 from django.contrib.auth import login,authenticate,logout
-from .models import Post,Like
+from .models import Post,Like,FriendRequest,UserProfile
+from django.contrib.auth.models import User
 
 # Create your views here.
 def home(request):
 	posts=Post.objects.all()
-	return render(request,"home.html",{"posts":posts})
+	user=User.objects.all()
+	return render(request,"home.html",{"posts":posts,"user":user})
 
 def LoginView(request):
 	if request.method=="POST":
@@ -45,16 +47,42 @@ def LikeView(request,post_id):
 		like.delete()
 	return redirect("home")
 
-# def CreatePostView(request):
-# 	if request.method=="POST":
-# 		form=CreatePostForm(request,data=request.POST)
-# 		if form.is_valid():
-# 			content=form.cleaned_data["content"]
-# 			Post.objects.create(user=request.user,content=content)
-# 			return redirect("home")
-# 	else:
-# 		form=CreatePostForm()
-# 	return render(request,"createpost.html",{"form":form})
+def CreatePostView(request):
+	if request.method=="POST":
+		form=CreatePostForm(request.POST)
+		if form.is_valid():
+			form=form.save(commit=False)
+			form.user=request.user
+			form.save()
+			return redirect("home")
+	else:
+		form=CreatePostForm()
+	return render(request,"createpost.html",{"form":form})
+
+def DeletePostView(request,post_id):
+	post=Post.objects.get(id=post_id)
+	post.delete()
+	return redirect("home")
+
+def SendRequestView(request,receiver_id):
+	from_user=request.user
+	to_user=User.objects.get(id=receiver_id)
+	FriendRequest.objects.create(from_user=from_user,to_user=to_user)
+	return redirect("home")
+
+def AcceptRequestView(request,sender_id):
+	from_user=User.objects.get(id=sender_id)
+	request=FriendRequest.objects.get(to_user=request.user,from_user=from_user)
+	request.accepted=True
+	request.save()
+	return redirect("friendrequest")
+
+
+def FriendRequestView(request):
+	requests=FriendRequest.objects.filter(to_user=request.user)
+	return render(request,"friendrequest.html",{"requests":requests})
+
+
 
 
 
