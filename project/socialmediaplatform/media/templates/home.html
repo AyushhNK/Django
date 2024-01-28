@@ -13,6 +13,7 @@
 <a href="{% url 'logout' %}">logout</a>
 {% for post in posts %}
 	<div>
+		<hr>
 		<p>{{post.user}}-{{post.created_at}}</p>
 		{% if request.user == post.user %}
 		<form method="POST" action="{% url 'deletepost' post.id %}">
@@ -26,6 +27,13 @@
 	            <input type="submit" value="Like" class="hover:font-bold">
 	    </form>
 	    <p>Likes:{{post.like_set.count}}</p>
+	    <form method="POST" action="{% url 'comment' post.id %}">
+	            {% csrf_token %}
+	            {{form}}
+	            <input type="submit" value="Comment" class="hover:font-bold">
+	    </form>
+	    <a href="{% url 'comments' post.id %}">comments</a>
+	    <hr>
 	</div>
 {% endfor %}
 

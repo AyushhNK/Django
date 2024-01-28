@@ -1,15 +1,16 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
-from .forms import UserProfileForm,CreatePostForm
+from .forms import UserProfileForm,CreatePostForm,CommentForm
 from django.contrib.auth import login,authenticate,logout
-from .models import Post,Like,FriendRequest,UserProfile
+from .models import Post,Like,FriendRequest,UserProfile,Comment
 from django.contrib.auth.models import User
 
 # Create your views here.
 def home(request):
 	posts=Post.objects.all()
 	user=User.objects.all()
-	return render(request,"home.html",{"posts":posts,"user":user})
+	form=CommentForm()
+	return render(request,"home.html",{"posts":posts,"user":user,"form":form})
 
 def LoginView(request):
 	if request.method=="POST":
@@ -46,6 +47,23 @@ def LikeView(request,post_id):
 	if not created:
 		like.delete()
 	return redirect("home")
+
+def CommentView(request,post_id):
+	user=request.user
+	post=Post.objects.get(id=post_id)
+	if request.method=="POST":
+		form=CommentForm(request.POST)
+		if form.is_valid():
+			form=form.save(commit=False)
+			form.post=post
+			form.user=user
+			form.save()
+			return redirect("home")
+
+def CommentLookupView(request,post_id):
+	post=Post.objects.get(id=post_id)
+	comments=Comment.objects.filter(post=post)
+	return render(request,"comments.html",{"comments":comments})
 
 def CreatePostView(request):
 	if request.method=="POST":
