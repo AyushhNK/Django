@@ -1,47 +1,41 @@
 {% extends 'baselayout.html' %}
 {%block content %}
-{% for u in user %}
-<p>{{u.username}}</p>
-<a href="{% url 'sendrequest' u.id %}">send request</a>
-{% endfor %}
-
+ <style>
+        textarea {
+            height:30px;
+        }
+    </style>
 {% if request.user.is_authenticated %}
 <h1>Hello {{request.user}}</h1>
-<a href="{% url 'friendrequest'%}">friend requests</a>
-<a href="{% url 'createpost' %}">Createpost</a>
-
-<a href="{% url 'logout' %}">logout</a>
 {% for post in posts %}
-	<div>
-		<hr>
-		<p>{{post.user}}-{{post.created_at}}</p>
-		{% if request.user == post.user %}
-		<form method="POST" action="{% url 'deletepost' post.id %}">
-	            {% csrf_token %}
-	            <input type="submit" value="Delete" class="hover:font-bold">
-	    </form>
-	    {% endif %}
-		<p>{{post.content}}</p>
-		<form method="POST" action="{% url 'like' post.id %}">
-	            {% csrf_token %}
-	            <input type="submit" value="Like" class="hover:font-bold">
-	    </form>
-	    <p>Likes:{{post.like_set.count}}</p>
-	    <form method="POST" action="{% url 'comment' post.id %}">
-	            {% csrf_token %}
-	            {{form}}
-	            <input type="submit" value="Comment" class="hover:font-bold">
-	    </form>
-	    <a href="{% url 'comments' post.id %}">comments</a>
-	    <hr>
+	<div class="flex items-center justify-center mt-2">
+		<div class="bg-blue-500 p-8 rounded-md shadow-md">
+			{% if post.user.userprofile.profile_picture %}
+			    <img src="{{post.user.userprofile.profile_picture.url}}" alt="Profile Picture" class="h-12 p-1 rounded-full">{{post.user}}--{{post.created_at}}
+			{% else %}
+			    <!-- Display a default image or alternative content if no profile picture is available -->
+			    <p><img src="/static/media/default.jpg" alt="Default Image" class="h-12 p-1 rounded-full">{{post.user}}--{{post.created_at}}</p>
+			{% endif %}
+			{% if request.user == post.user %}
+			<form method="POST" action="{% url 'deletepost' post.id %}">
+		            {% csrf_token %}
+		            <input type="submit" value="Delete" class="hover:font-bold">
+		    </form>
+		    {% endif %}
+			<p>{{post.content}}</p>
+			<form method="POST" action="{% url 'like' post.id %}">
+		            {% csrf_token %}
+		            <input type="submit" value="Like" class="hover:font-bold">--{{post.like_set.count}}
+		    </form>
+		   
+		    <form method="POST" action="{% url 'comment' post.id %}">
+		            {% csrf_token %}
+		            {{form}}
+		            <input type="submit" value="Comment" class="hover:font-bold">
+		    </form>
+		    <a href="{% url 'comments' post.id %}" class="hover:font-bold">comments</a>
+		</div>
 	</div>
 {% endfor %}
-
-
-
-{% else %}
-	<h1>Welcome to Socivibe</h1>
-	<a href="{% url 'login' %}">Login</a>
-	<a href="{% url 'signup' %}">Signup</a>
 {% endif %}
 {% endblock %}

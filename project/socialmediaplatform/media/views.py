@@ -8,9 +8,8 @@ from django.contrib.auth.models import User
 # Create your views here.
 def home(request):
 	posts=Post.objects.all()
-	user=User.objects.all()
 	form=CommentForm()
-	return render(request,"home.html",{"posts":posts,"user":user,"form":form})
+	return render(request,"home.html",{"posts":posts,"form":form})
 
 def LoginView(request):
 	if request.method=="POST":
@@ -98,7 +97,8 @@ def AcceptRequestView(request,sender_id):
 
 def FriendRequestView(request):
 	requests=FriendRequest.objects.filter(to_user=request.user)
-	return render(request,"friendrequest.html",{"requests":requests})
+	user=User.objects.all()
+	return render(request,"friendrequest.html",{"user":user,"requests":requests})
 
 
 

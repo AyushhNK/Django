@@ -2,10 +2,43 @@
 <html>
 <head>
 	<title>SOCIVIBE</title>
+	<script src="https://cdn.tailwindcss.com"></script>
 </head>
+{% if request.user.is_authenticated %}
 <body>
+	<nav class="flex justify-between bg-gradient-to-r from-green-500 to-yellow-500 font-bold tracking-widest text-lg rounded-xl">
+		<div class="container mx-auto flex justify-between items-center">
+        <!-- Logo -->
+        <a href="{% url 'home' %}" class="text-white text-xl font-bold"><img src="/static/media/logo.png" class="h-12 w-24 p-1"></a>
+
+        <!-- Navigation Links -->
+        <div class="space-x-4">
+	        <a href="{% url 'friendrequest'%}" class="hover:text-blue-600">friend requests</a>
+			<a href="{% url 'createpost' %}" class="hover:text-blue-600">Createpost</a>
+			<a href="{% url 'logout' %}" class="hover:text-blue-600">logout</a>
+		</div>
+    </div>
+	</nav>
+{% else %}
+<body class="bg-[url('/static/media/background.jpg')] bg-cover">
+	<nav class="flex justify-between bg-gradient-to-r from-green-500 to-yellow-500 font-bold tracking-widest text-lg rounded-xl">
+		<div class="container mx-auto flex justify-between items-center">
+	        <!-- Logo -->
+	        <a href="{% url 'home' %}" class="text-white text-xl font-bold"><img src="/static/media/logo.png" class="h-12 w-24 p-1"></a>
+
+	        <!-- Navigation Links -->
+	        <div class="space-x-4">
+		        <a href="{% url 'login' %}" class="hover:text-blue-600">login</a>
+				<a href="{% url 'signup' %}" class="hover:text-blue-600">signup</a>
+			</div>
+    	</div>
+    </nav>
+
+{% endif %}
 	{% block content %}
 	{% endblock %}
-
+	<footer class="fixed bottom-0 w-10/12 h-8 bg-gradient-to-r from-green-500 to-yellow-500 text-center font-bold tracking-widest text-lg rounded-xl ml-32 mb-1">
+		<h1 class="text-center">©Socivibe.org</h1>
+	</footer>
 </body>
 </html>

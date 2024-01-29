@@ -1,5 +1,8 @@
+{% extends 'baselayout.html' %}
+{% block content %}
 {% for comment in comments %}
-	{{ comment.user}}
-	{{ comment.content }}
-	{{ comment.created_at }}
+	<h4 class="font-bold text-2xl">{{ comment.user}}</h4>
+	<p>{{ comment.content }}</p>
+	<p>{{ comment.created_at }}</p>
 {% endfor %}
+{% endblock %}

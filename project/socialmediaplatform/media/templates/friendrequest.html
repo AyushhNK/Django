@@ -1,3 +1,4 @@
+{% extends 'baselayout.html' %}
 {% block content %}
   <h2>Friend Requests</h2>
 
@@ -15,4 +16,9 @@
       {% endif %}
     {% endfor %}
   </ul>
+    <h3>Reccomendation:</h3>
+    {% for u in user %}
+    <p>{{u.username}}</p>
+    <a href="{% url 'sendrequest' u.id %}">send request</a>
+    {% endfor %}
 {% endblock %}
