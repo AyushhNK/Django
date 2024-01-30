@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance tracer</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+   
+    <canvas id="myDoughnutChart"></canvas>
+
+    <script>
+    // Sample data for the doughnut chart
+    var data = {
+        labels: {{label|safe}},
+        datasets: [{
+            data: {{data|safe}},
+
+        }]
+    };
+
+    // Doughnut chart configuration
+    var options = {
+        responsive: true,
+        maintainAspectRatio: false
+    };
+
+    // Get the canvas element
+    var ctx = document.getElementById('myDoughnutChart').getContext('2d');
+
+    // Create the doughnut chart
+    var myDoughnutChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options
+    });
+        
+    </script>
+</body>
+</html>
