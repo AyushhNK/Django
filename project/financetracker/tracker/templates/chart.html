@@ -6,32 +6,76 @@
     <title>Finance tracer</title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+     <style>
+        .chart-container {
+            width: 50%; 
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
-   
-    <canvas id="myDoughnutChart"></canvas>
+    <div class="chart-container">
+        <canvas id="linechart" width="400" height="200"></canvas>
+        <h1>Each transaction</h1>
+    </div>
+    <div class="chart-container">
+        <canvas id="monthlyChart" width="400" height="200"></canvas>
+        <h1>Monthly summary</h1>
+    </div>
 
     <script>
-    // Sample data for the doughnut chart
+    // bar chart for monthly analysis
+        var labels = [{% for entry in monthly_summary %}"{{ entry.month|date:'F Y' }}",{% endfor %}];
+        var amounts = [{% for entry in monthly_summary %}{{ entry.total_amount }},{% endfor %}];
+
+        var ctx = document.getElementById('monthlyChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Amount',
+                    data: amounts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+// line chart for every transaction
     var data = {
-        labels: {{label|safe}},
+        labels: {{date|safe}},
         datasets: [{
             data: {{data|safe}},
 
         }]
     };
 
-    // Doughnut chart configuration
     var options = {
-        responsive: true,
-        maintainAspectRatio: false
-    };
+                scales: {
+                    x: [{
+                        type: 'category',
+                        labels: {{label|safe}},
+                    }],
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
 
-    // Get the canvas element
-    var ctx = document.getElementById('myDoughnutChart').getContext('2d');
 
-    // Create the doughnut chart
-    var myDoughnutChart = new Chart(ctx, {
+    var ctx = document.getElementById('linechart').getContext('2d');
+
+
+    var linechart = new Chart(ctx, {
         type: 'line',
         data: data,
         options: options
