@@ -1,16 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Chatapp</title>
-	<script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
-		<nav class="flex justify-end">
-            {% if request.user.is_authenticated %}
-            <a href = "{% url 'logout-user' %}">Logout</a>
-            {% endif %}
-        </nav>
+    <meta charset="UTF-8" />
+    <title>ChatApp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	{% block content %}{% endblock %}
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Top Navbar -->
+    <nav class="bg-white border-b shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+
+            <!-- Logo -->
+            <div class="text-xl font-bold text-blue-600">
+                💬 ChatApp
+            </div>
+
+            <!-- Right actions -->
+            {% if request.user.is_authenticated %}
+            <div class="flex items-center gap-4">
+                <span class="text-sm text-gray-600">
+                    {{ request.user.username }}
+                </span>
+
+                <a href="{% url 'logout-user' %}"
+                   class="px-4 py-1.5 rounded-lg bg-red-500 text-white text-sm font-medium hover:bg-red-600 transition">
+                    Logout
+                </a>
+            </div>
+            {% else %}
+            <a href="{% url 'login-user' %}"
+               class="px-4 py-1.5 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition">
+                Login
+            </a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <main class="min-h-[calc(100vh-64px)]">
+        {% block content %}{% endblock %}
+    </main>
+
 </body>
 </html>

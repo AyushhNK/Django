@@ -1,16 +1,72 @@
 {% extends 'baselayout.html' %}
+
 {% block content %}
-	<!-- inbox.html -->
-<h1>Inbox</h1>
-{% for message in received_messages %}
-  <p>{{ message.sender }} at {{ message.timestamp }}: {{ message.content }}</p>
-{% endfor %}
+<div class="min-h-screen bg-gray-100 flex justify-center py-10">
 
-<h1>Send Message to {{ recipient.username }}</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Send</button>
-</form>
+    <div class="w-full max-w-4xl bg-white rounded-xl shadow-lg overflow-hidden">
+
+        <!-- Header -->
+        <div class="px-6 py-4 border-b text-xl font-semibold">
+            📥 Inbox
+        </div>
+
+        <!-- Messages -->
+        <div class="p-6 space-y-4 max-h-[400px] overflow-y-auto bg-gray-50">
+            {% for message in received_messages %}
+                <div class="bg-white border rounded-lg p-4">
+                    <div class="flex justify-between text-sm text-gray-500 mb-1">
+                        <span><strong>{{ message.sender }}</strong></span>
+                        <span>{{ message.timestamp|date:"M d, Y H:i" }}</span>
+                    </div>
+                    <p class="text-gray-800">
+                        {{ message.content }}
+                    </p>
+                </div>
+            {% empty %}
+                <p class="text-gray-500 text-center">
+                    No messages yet.
+                </p>
+            {% endfor %}
+        </div>
+
+        <!-- Send Message -->
+        <div class="border-t px-6 py-4">
+            <h2 class="text-lg font-semibold mb-3">
+                ✉️ Send Message to <span class="text-blue-600">{{ recipient.username }}</span>
+            </h2>
+
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+
+                <div>
+                    {{ form.content.label_tag }}
+                    {{ form.content }}
+                </div>
+
+                <button
+                    type="submit"
+                    class="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
+                    Send Message
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    textarea {
+        width: 100%;
+        min-height: 100px;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        outline: none;
+    }
+
+    textarea:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+</style>
 {% endblock %}
-
